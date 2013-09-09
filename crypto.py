@@ -39,7 +39,7 @@ class crypto:
 		try:
 			conn = httplib.HTTPSConnection("crypto-trade.com")
 			url = self.basepublic + path
-			print url
+			#print url
 			conn.request("GET", url)
 			response = conn.getresponse()
 			try:

@@ -60,7 +60,7 @@ def getS(exchange, pairpart1, pairpart2):
 	elif exchange == "crypto":
 		depth_cryptotrade = getDepth_cryptotrade(pairpart1, pairpart2)
 		sprice = float(depth_cryptotrade['bids'][0][0])
-		print sprice
+		#print sprice
 	elif exchange == "coins-e":
 		depth_coinse = getDepth_coinse(pairpart1, pairpart2)
 		sprice = depth_coinse['marketdepth']['bids'][1]['r']
@@ -83,7 +83,7 @@ def getB(exchange, pairpart1, pairpart2):
 	elif exchange == "crypto":
 		depth_cryptotrade = getDepth_cryptotrade(pairpart1, pairpart2)
 		bprice = float(depth_cryptotrade['asks'][0][0])
-		print bprice
+		#print bprice
 	elif exchange == "coins-e":
 		depth_coinse = getDepth_coinse(pairpart1, pairpart2)
 		bprice = depth_coinse['marketdepth']['asks'][0]['r']
