@@ -16,9 +16,9 @@ from crypto import crypto
 
 FEE = 1.02 # fee for every trade (2%)
 Diff = 1.02 # 2 % arbitrage to execute
-curr = ["ltc","ftc","ppc","nvc","nmc"] #currencies to trade if arbitrage is found
-exc = ["btc-e", "vircu", "coins-e"] #exchanges to trade on for the function calls
-# also "cryptsy" and "crypto" (but not working for me as of 9/9/2013)
+curr = ["ltc","ftc","ppc","nmc"] #currencies to trade if arbitrage is found
+exc = ["crypto","btc-e", "vircu", "coins-e"] #exchanges to trade on for the function calls
+# also "cryptsy" (but not working for me as of 9/9/2013)
 amount1 = 10 #the number of altcoins to be traded vs. btc in each trade
 
 # BTC-e login data:
