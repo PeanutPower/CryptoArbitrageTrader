@@ -3,7 +3,7 @@
 
 import time,hmac,base64,hashlib,urllib,urllib2,json
 class crypto:
-  timeout = 15
+	timeout = 15
 	tryout = 8
 
 	def __init__(self, key='', secret='', agent='Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:24.0) Gecko/20100101 Firefox/24.0'):
