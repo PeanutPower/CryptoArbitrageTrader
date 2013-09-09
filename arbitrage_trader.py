@@ -123,12 +123,12 @@ def make_trade(exchange, type, amount, pairpart1, pairpart2, rate):   # Type = "
 #############################################################
 
 def compare():
-	#print "starting arbitrage checking"
+	print "Arbitrage Trader starting up..."
 	pairpart2 = "btc"
 
 	n=0
 	while n<=(len(curr)-1):
-		print "Starting Arbitrage checking for Currency " + curr[n]
+		print "Starting Arbitrage checking for " + curr[n]+"/btc"
 		pairpart1 = curr[n]
 		m=0
 		while m<=(len(exc)-1):
@@ -138,18 +138,20 @@ def compare():
 				#print "k = " + str(k)
 				try:
 					sprice = getS(exc[m], curr[n], "btc")
-					#print "SPrice = " + sprice + " on " + exc[m]
 					bprice = getB(exc[k], curr[n], "btc")
-					#print "BPrice = " + bprice + " on " + exc[k]
+					
 				except Exception:
 					pass
-				#print "BPrice = " + str(bprice) + " on " + exc[k] #enable for debug
+
+				print "Sell price = " + str(sprice) + " on " + exc[m]
+				print "Buy price = " + str(bprice) + " on " + exc[k]
+					
 				if round((int(bprice) * Diff * FEE),8) < round((int(sprice) * FEE),8):
 					make_trade(exc[m], "buy", amount1, pairpart1, "btc", bprice)
 					make_trade(exc[k], "sell", amount1, pairpart1, "btc", sprice)
 					#printouts for debugging
-					#print "price on " + exc[m] + " for " + curr[n] + " is " + str(sprice) + " BTC"
-					#print "price on " + exc[k] + " for " + curr[n] + " is " + str(bprice) + " BTC"
+					print "price on " + exc[m] + " for " + curr[n] + " is " + str(sprice) + " BTC"
+					print "price on " + exc[k] + " for " + curr[n] + " is " + str(bprice) + " BTC"
 					print "executing trade at a win per 1" + curr[n] + " of " + str(round(((str(sprice) * FEE)-(str(bprice) * Diff * FEE)),8)) + "BTC"
 				else:
 					try:
@@ -161,8 +163,8 @@ def compare():
 						make_trade(exc[k], "buy", amount1, pairpart1, "btc", bprice)
 						make_trade(exc[m], "sell", amount1, pairpart1, "btc", sprice)
 						#printouts for debugging
-						#print "price on " + exc[k] + " for " + curr[n] + " is " + str(sprice) + " BTC"
-						#print "price on " + exc[m] + " for " + curr[n] + " is " + str(bprice) + " BTC"
+						print "price on " + exc[k] + " for " + curr[n] + " is " + str(sprice) + " BTC"
+						print "price on " + exc[m] + " for " + curr[n] + " is " + str(bprice) + " BTC"
 						print "executing trade at a win per 1" + curr[n] + " of " + str(round(((sprice * FEE)-(bprice * Diff * FEE)),8)) + "BTC"
 				k+=1
 			m+=1
@@ -172,13 +174,13 @@ def compare():
 ###############################################################
 
 def main():
-	"""main funtion, called at the start of the program"""
+	"""main function, called at the start of the program"""
  
 	def run1(sleeptime, lock):
 		while True:
 			lock.acquire()
-			compare() #die Hauptfunktion der Arbitrage
-			print "Round completed"
+			compare() #The main Arbitrage function
+			print "Round completed sleeping for 15 seconds"
 			lock.release()
 			time.sleep(sleeptime)
  
