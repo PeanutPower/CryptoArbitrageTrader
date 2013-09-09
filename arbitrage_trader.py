@@ -96,8 +96,10 @@ def getB(exchange, pairpart1, pairpart2):
 def make_trade(exchange, type, amount, pairpart1, pairpart2, rate):   # Type = "buy" or "sell"
 	if exchange == "btc-e":
 		if type == "buy":
+			print "sending buy request to btc-e"
 			btce.trade('buy',amount, pairpart1+'_'+pairpart2, rate)
 		else:
+			print "sending sell request to btc-e"
 			btce.trade('sell',amount, pairpart1+'_'+pairpart2, rate)
 	elif exchange == "vircu":
 		if type == "buy":
@@ -111,9 +113,11 @@ def make_trade(exchange, type, amount, pairpart1, pairpart2, rate):   # Type = "
 			cryptsy.CreateSellOrder(pairpart1, pairpart2, amount, rate)
 	elif exchange == "crypto":
 		if type == "buy":
-			cryp.req('private/trade',{"pair":pairpart1+"_"+pairpart2,"type":"Buy","amount":amount,"rate":rate})
+			print "sending buy request to crypto-trade"
+			cryp.req('trade',{"pair":pairpart1+"_"+pairpart2,"type":"Buy","amount":amount,"rate":rate})
 		else:
-			cryp.req('private/trade',{"pair":pairpart1+"_"+pairpart2,"type":"Sell","amount":amount,"rate":rate})
+			print "sending sell request to crypto-trade"
+			cryp.req('trade',{"pair":pairpart1+"_"+pairpart2,"type":"Sell","amount":amount,"rate":rate})
 	elif exchange == "coins-e":
 		if type == "buy":
 			authenticated_request('market/%s/' % (pairpart1+'_'+pairpart2),"neworder",{'order_type':'buy', 'rate':rate, 'quantity':amount,})
@@ -146,9 +150,12 @@ def compare():
 					pass
 
 				print "Sell price = " + str(sprice) + " on " + exc[m]
-				print "Buy price = " + str(bprice) + " on " + exc[k]
+				print "Buy price  = " + str(bprice) + " on " + exc[k]
+				
+				if (float(bprice) < float(sprice)):
+					print "Opportunity to buy " + curr[n] + " for "+ str(bprice)+ " on "+exc[k]+" and sell for " + str(sprice) + " on " + exc[m]
 					
-				if round((int(bprice) * Diff * FEE),8) < round((int(sprice) * FEE),8):
+				if round((float(bprice) * Diff * FEE),8) < round((float(sprice) * FEE),8):
 					make_trade(exc[m], "buy", amount1, pairpart1, "btc", bprice)
 					make_trade(exc[k], "sell", amount1, pairpart1, "btc", sprice)
 					#printouts for debugging
@@ -161,7 +168,7 @@ def compare():
 						bprice = getB(exc[m], curr[n], "btc")
 					except Exception:
 						pass
-					if round((int(bprice) * Diff * FEE),8) < round((int(sprice) * FEE),8):
+					if round((float(bprice) * Diff * FEE),8) < round((float(sprice) * FEE),8):
 						make_trade(exc[k], "buy", amount1, pairpart1, "btc", bprice)
 						make_trade(exc[m], "sell", amount1, pairpart1, "btc", sprice)
 						#printouts for debugging
