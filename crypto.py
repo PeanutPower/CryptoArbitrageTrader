@@ -3,14 +3,14 @@
 
 import time,hmac,base64,hashlib,urllib,urllib2,json
 class crypto:
-	timeout = 15
+  timeout = 15
 	tryout = 8
 
 	def __init__(self, key='', secret='', agent='Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:24.0) Gecko/20100101 Firefox/24.0'):
 		self.key, self.secret, self.agent = key, secret, agent
 		self.time = {'init': time.time(), 'req': time.time()}
 		self.reqs = {'max': 10, 'window': 10, 'curr': 0}
-		self.base = 'https://www.crypto-trade.com/api/1/'
+		self.base = 'https://www.crypto-trade.com/api/1/private/'
 
 	def throttle(self):
 		# check that in a given time window (10 seconds),
@@ -63,9 +63,9 @@ class crypto:
 				raise Exception('Timeout')
 				
 		
-#key="MYKEY"
-#secret="MYSECRET"
-#cryp = crypto(key,secret)				
+key="MYKEY"
+secret="MYSECRET"
+cryp = crypto(key,secret)				
 #			
 #Example placing an order			
 #cryp.req('trade',{"pair":"ltc_btc","type":"Buy","amount":ltc_bid_amount,"rate":price_to_bid})		
