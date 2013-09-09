@@ -154,6 +154,8 @@ def compare():
 				
 				if (float(bprice) < float(sprice)):
 					print "Opportunity to buy " + curr[n] + " for "+ str(bprice)+ " on "+exc[k]+" and sell for " + str(sprice) + " on " + exc[m]
+					yie = (float(sprice) - float(bprice))/float(sprice)*100.0;
+					print "Yield before trading costs would be: "+str(yie)+"%"
 					
 				if round((float(bprice) * Diff * FEE),8) < round((float(sprice) * FEE),8):
 					make_trade(exc[m], "buy", amount1, pairpart1, "btc", bprice)
