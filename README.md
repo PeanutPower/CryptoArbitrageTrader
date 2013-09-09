@@ -27,4 +27,8 @@ http://www.lfd.uci.edu/~gohlke/pythonlibs/
 
 3. Edit config.py
 
+"Edit the config.py with your API Keypairs for every exchange
+Edit the value "amount" if you like to
+Have at least the amount of altcoins you set in the config in your available funds of each exchange. BTC fund has to be highest price altcoin * amount"
+
 4. Run: python arbitrage_trader.py
