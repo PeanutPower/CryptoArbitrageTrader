@@ -20,7 +20,6 @@ Getting Started
 1. You will need Python on your system:
 http://www.python.org/getit/
 (Windows: You may wish to add C:\Python27\; to your PATH environment variables to you can run "python" from the command line)
-
 If you are running windows you'll also need pycurl
 http://www.lfd.uci.edu/~gohlke/pythonlibs/
 
