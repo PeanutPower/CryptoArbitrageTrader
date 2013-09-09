@@ -10,4 +10,22 @@ https://bitcointalk.org/index.php?topic=263815.0
 Donations to JohnDorien:
 
 BTC: 1JxT7dgLxbdHR9iBpu7v4z4ph3kjD5pjA9
+
 LTC: LQ32aPGFGwFb7MxvLTai2ePwRFRbnSKpWv
+
+
+Getting Started
+================
+
+1. You will need Python on your system:
+http://www.python.org/getit/
+(Windows: You may wish to add C:\Python27\; to your PATH environment variables to you can run "python" from the command line)
+
+If you are running windows you'll also need pycurl
+http://www.lfd.uci.edu/~gohlke/pythonlibs/
+
+2. Clone the repo somewhere
+
+3. Edit config.py
+
+4. Run: python arbitrage_trader.py
