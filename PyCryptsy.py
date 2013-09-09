@@ -80,32 +80,29 @@ class PyCryptsy:
           mkt_id=market["marketid"]
       return mkt_id
     except:
-      return "error catching Market ID"
+      return None
     
   # get buy price for a currency pair
   def GetBuyPrice (self, src, dest):
     mktid = self.GetMarketID(src, dest)
     if mktid is None:
-      return "Market ID error"
+      return 0
     try:
-      global r
       r=self.Query("marketorders", {"marketid": mktid})
-      #print r   #enable for debugging
       return float(r["return"]["buyorders"][0]["buyprice"])
     except:
-      return "Market buy price get error"
+      return 0
 
   # get sell price for a currency pair
   def GetSellPrice (self, src, dest):
     mktid = self.GetMarketID(src, dest)
     if mktid is None:
-      return "Market ID error"
+      return 0
     try:
-      #r=self.Query("marketorders", {"marketid": mktid}) #throwing empty array, no idea why --> using global r
-      #print r
+      r=self.Query("marketorders", {"marketid": mktid})
       return float(r["return"]["sellorders"][0]["sellprice"])
     except:
-      return "Market sell price get error"
+      return 0
 
   # get available balance for a currency
   def GetAvailableBalance (self, curr):
