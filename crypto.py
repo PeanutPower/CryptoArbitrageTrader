@@ -1,7 +1,15 @@
 #Matuszed 2013-07-03
 #Questions about usage email mindsdecree@gmail.com
 
-import time,hmac,base64,hashlib,urllib,urllib2,json
+import time
+import hmac
+import base64
+import hashlib
+import urllib
+import urllib2
+import json
+import httplib
+
 class crypto:
 	timeout = 15
 	tryout = 8
@@ -10,7 +18,8 @@ class crypto:
 		self.key, self.secret, self.agent = key, secret, agent
 		self.time = {'init': time.time(), 'req': time.time()}
 		self.reqs = {'max': 10, 'window': 10, 'curr': 0}
-		self.base = 'https://www.crypto-trade.com/api/1/private/'
+		self.baseprivate = 'https://www.crypto-trade.com/api/1/private/'	# for authenticated POST requests
+		self.basepublic = 'https://www.crypto-trade.com/api/1/'				# for unauthenticated GET requests
 
 	def throttle(self):
 		# check that in a given time window (10 seconds),
@@ -25,10 +34,27 @@ class crypto:
 			print 'Request limit reached...'
 			time.sleep(self.reqs['window'] - diff)
 
+	def reqpublic(self, path):
+		# Send a request to the public API
+		try:
+			conn = httplib.HTTPSConnection("crypto-trade.com")
+			url = self.basepublic + path
+			print url
+			conn.request("GET", url)
+			response = conn.getresponse()
+			try:
+				response = json.load(response)
+			except ValueError:
+				response = {'success':0, 'error':'No JSON in response. Crypto-Trade down.'}
+			conn.close()
+			return response
+		except:
+			return {'success':0, 'error':'Connection failed.'}
+
 	def makereq(self, path, data):
 		# bare-bones hmac rest sign
-                params = {'nonce':str(int(time.time() * 1e3))}
-		return urllib2.Request(self.base + path, params, {
+		params = {'nonce':str(int(time.time() * 1e3))}
+		return urllib2.Request(self.baseprivate + path, params, {
                         #'Content-Type' :'application/json',
 			'AuthKey': self.key,
 			'AuthSign': hmac.new(self.secret, data, hashlib.sha512).hexdigest()
@@ -62,10 +88,12 @@ class crypto:
 			if time.time() - t0 > self.timeout or tries > self.tryout:
 				raise Exception('Timeout')
 				
-		
-key="MYKEY"
-secret="MYSECRET"
-cryp = crypto(key,secret)				
+
+#Example configuration				
+#key='MYKEY'
+#secret='MYSECRET'
+#cryp = crypto(key,secret)				
+
 #			
 #Example placing an order			
 #cryp.req('trade',{"pair":"ltc_btc","type":"Buy","amount":ltc_bid_amount,"rate":price_to_bid})		
@@ -84,6 +112,9 @@ cryp = crypto(key,secret)
 #for order in cryp.req('ordershistory',{'start_date':unix_time_lag})['data']:
 #    if  order["status"]=="Active" or order["status"]=='Partly Completed':
 #	cryp.req('cancelorder',{"orderid":int(order["id"])})
+#
+#Example Market Depth
+#cryp.reqpublic('depth/ltc_btc')
 
 
 	

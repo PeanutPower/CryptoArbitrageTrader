@@ -35,7 +35,7 @@ def getDepth_cryptsy(pairpart1, pairpart2):
 	return depth_cryptsy
 
 def getDepth_cryptotrade(pairpart1, pairpart2):
-	depth_cryptotrade = cryp.req('depth/'+pairpart1+'_'+pairpart2)
+	depth_cryptotrade = cryp.reqpublic('depth/'+pairpart1+'_'+pairpart2)
 	return depth_cryptotrade
 
 def getDepth_coinse(pairpart1, pairpart2):
@@ -59,7 +59,8 @@ def getS(exchange, pairpart1, pairpart2):
 		sprice = cryptsy.GetSellPrice(pairpart2, pairpart1)
 	elif exchange == "crypto":
 		depth_cryptotrade = getDepth_cryptotrade(pairpart1, pairpart2)
-		sprice = depth_cryptotrade['bids'][0][0]
+		sprice = float(depth_cryptotrade['bids'][0][0])
+		print sprice
 	elif exchange == "coins-e":
 		depth_coinse = getDepth_coinse(pairpart1, pairpart2)
 		sprice = depth_coinse['marketdepth']['bids'][1]['r']
@@ -81,7 +82,8 @@ def getB(exchange, pairpart1, pairpart2):
 		bprice = cryptsy.GetBuyPrice(pairpart1, pairpart2)
 	elif exchange == "crypto":
 		depth_cryptotrade = getDepth_cryptotrade(pairpart1, pairpart2)
-		bprice = depth_cryptotrade['asks'][0][0]
+		bprice = float(depth_cryptotrade['asks'][0][0])
+		print bprice
 	elif exchange == "coins-e":
 		depth_coinse = getDepth_coinse(pairpart1, pairpart2)
 		bprice = depth_coinse['marketdepth']['asks'][0]['r']
